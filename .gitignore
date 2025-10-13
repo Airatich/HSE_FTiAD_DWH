@@ -1,0 +1,34 @@
+# PostgreSQL data directories
+data/
+replica_data/
+data-replica/
+
+# PostgreSQL WAL and temporary files
+*.pid
+postmaster.pid
+postmaster.opts
+
+# Log files
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+*.bak
+*.backup
+
+# Archives
+*.zip
+*.tar.gz
+*.rar
+

@@ -1,0 +1,51 @@
+# поднимаю master и replica
+version: "3.9"
+
+services:
+  postgres-master:
+    image: postgres:15 # образ postgres
+    container_name: hw1-postgres-master # имя контейнера
+    restart: always # restart always
+    environment:
+      POSTGRES_USER: postgres # пользователь
+      POSTGRES_PASSWORD: postgres # пароль
+    ports:
+      - "2222:5432" # порты для мастера (хост:порт)
+    volumes:
+      - ./data:/var/lib/postgresql/data
+      - ./replica_data:/var/lib/postgresql/data-replica
+      - ./init-script/common-config/postgresql.conf:/etc/postgresql/postgresql.conf
+      - ./init-script/common-config/pg_hba.conf:/etc/postgresql/pg_hba.conf
+      - ./init-script/sql:/docker-entrypoint-initdb.d  # Автоматический запуск
+      - ./init-script:/etc/postgresql/init-script
+
+      
+    command: # настройка реплики
+      postgres -c wal_level=replica
+               -c max_wal_senders=10
+               -c wal_keep_size=64
+               -c listen_addresses='*'
+               -c hot_standby=on
+
+  postgres-replica:
+    image: postgres:15 # образ postgres
+    container_name: hw1-postgres-replica # имя контейнера
+    restart: always # restart always
+    environment:
+      POSTGRES_USER: postgres # пользователь
+      POSTGRES_PASSWORD: postgres # пароль
+    ports:
+      - "5433:5432" # порты для реплики
+    volumes:
+      - ./replica_data:/var/lib/postgresql/data # данные реплики
+      - ./init-script/common-config/postgres.conf:/etc/postgresql/postgresql.conf
+      - ./init-script/common-config/pg_hba.conf:/etc/postgresql/pg_hba.conf
+
+    depends_on:
+      - postgres-master # зависит от мастера
+    command:
+      postgres -c hot_standby=on
+
+
+# ./init — папка, где лежат sql-миграции, которые автоматически применятся при старте мастера.
+# master_data и replica_data — чтобы хранить данные отдельно.
