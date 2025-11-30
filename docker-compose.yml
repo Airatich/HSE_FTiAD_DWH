@@ -18,11 +18,12 @@ services:
       - ./init-script/common-config/pg_hba.conf:/etc/postgresql/pg_hba.conf
       - ./init-script/sql:/docker-entrypoint-initdb.d  # Автоматический запуск
       - ./init-script:/etc/postgresql/init-script
+      - ./init-script/sql/09_debezium_setup.sql:/etc/postgresql/init-script/sql/09_debezium_setup.sql
 
-      
-    command: # настройка реплики
-      postgres -c wal_level=replica
+    command: # настройка реплики и логического декодирования для Debezium
+      postgres -c wal_level=logical
                -c max_wal_senders=10
+               -c max_replication_slots=10
                -c wal_keep_size=64
                -c listen_addresses='*'
                -c hot_standby=on
@@ -46,6 +47,92 @@ services:
     command:
       postgres -c hot_standby=on
 
+  postgres-dwh:
+    image: postgres:15 # образ postgres
+    container_name: hw1-postgres-dwh # имя контейнера DWH
+    restart: always # restart always
+    environment:
+      POSTGRES_USER: postgres # пользователь
+      POSTGRES_PASSWORD: postgres # пароль
+    ports:
+      - "5434:5432" # порты для DWH
+    volumes:
+      - ./dwh_data:/var/lib/postgresql/data # данные DWH
+      - ./init-script/common-config/postgresql.conf:/etc/postgresql/postgresql.conf
+      - ./init-script/common-config/pg_hba.conf:/etc/postgresql/pg_hba.conf
+      - ./init-script/sql/07_dwh_detailed_ddl.sql:/docker-entrypoint-initdb.d/07_dwh_detailed_ddl.sql # DDL для DWH
+      - ./init-script/sql/08_dwh_init_source_systems.sql:/docker-entrypoint-initdb.d/08_dwh_init_source_systems.sql # Инициализация систем-источников
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.5.0
+    container_name: hw1-zookeeper
+    restart: always
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+
+  kafka:
+    image: confluentinc/cp-kafka:7.5.0
+    container_name: hw1-kafka
+    restart: always
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+
+  debezium-connect:
+    image: debezium/connect:2.5
+    container_name: hw1-debezium-connect
+    restart: always
+    depends_on:
+      - kafka
+      - postgres-master
+    ports:
+      - "8083:8083"
+    environment:
+      BOOTSTRAP_SERVERS: kafka:9092
+      GROUP_ID: 1
+      CONFIG_STORAGE_TOPIC: my_connect_configs
+      OFFSET_STORAGE_TOPIC: my_connect_offsets
+      STATUS_STORAGE_TOPIC: my_connect_statuses
+      CONFIG_STORAGE_REPLICATION_FACTOR: 1
+      OFFSET_STORAGE_REPLICATION_FACTOR: 1
+      STATUS_STORAGE_REPLICATION_FACTOR: 1
+    volumes:
+      - ./debezium/connectors:/kafka/connect/debezium-connectors
+
+  dmp-service:
+    build: ./dmp-service
+    container_name: hw1-dmp-service
+    restart: always
+    depends_on:
+      - kafka
+      - postgres-dwh
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      KAFKA_TOPIC_PREFIX: postgres-master.public
+      KAFKA_CONSUMER_GROUP: dmp-service-group
+      DWH_HOST: postgres-dwh
+      DWH_PORT: 5432
+      DWH_DATABASE: postgres
+      DWH_USER: postgres
+      DWH_PASSWORD: postgres
+    volumes:
+      - ./dmp-service:/app
+    command: python main.py
 
 # ./init — папка, где лежат sql-миграции, которые автоматически применятся при старте мастера.
 # master_data и replica_data — чтобы хранить данные отдельно.
+# dwh_data — данные для DWH.
+# debezium/connectors — конфигурации Debezium connectors
+# dmp-service — сервис для загрузки данных из Kafka в DWH

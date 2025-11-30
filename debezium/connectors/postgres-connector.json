@@ -1,0 +1,30 @@
+{
+  "name": "postgres-connector",
+  "config": {
+    "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+    "tasks.max": "1",
+    "database.hostname": "postgres-master",
+    "database.port": "5432",
+    "database.user": "postgres",
+    "database.password": "postgres",
+    "database.dbname": "user_service_db",
+    "database.server.name": "postgres-master",
+    "plugin.name": "pgoutput",
+    "slot.name": "debezium_slot_user_service",
+    "publication.name": "debezium_publication",
+    "publication.autocreate.mode": "all_tables",
+    "table.include.list": "public.users,public.user_addresses,public.user_status_history",
+    "schema.include.list": "public",
+    "topic.prefix": "postgres-master",
+    "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "key.converter.schemas.enable": "false",
+    "value.converter.schemas.enable": "false",
+    "transforms": "unwrap",
+    "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",
+    "transforms.unwrap.drop.tombstones": "false",
+    "transforms.unwrap.delete.handling.mode": "rewrite",
+    "transforms.unwrap.add.fields": "op,source.ts_ms,source.lsn"
+  }
+}
+

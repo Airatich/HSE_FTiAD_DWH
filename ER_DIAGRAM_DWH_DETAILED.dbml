@@ -1,0 +1,492 @@
+// =====================================================
+// ER-диаграмма детального слоя DWH (Data Vault 2.0)
+// Формат: DBML для dbdiagram.io
+// =====================================================
+// Инструкция: 
+// 1. Откройте https://dbdiagram.io
+// 2. Скопируйте содержимое этого файла
+// 3. Вставьте в редактор dbdiagram.io
+// 4. Диаграмма будет автоматически построена
+// =====================================================
+
+Project Data_Vault_2_0_DWH {
+  database_type: 'PostgreSQL'
+  Note: 'Детальный слой DWH в архитектуре Data Vault 2.0'
+}
+
+// =====================================================
+// ХАБЫ (HUBS) - Бизнес-ключи
+// =====================================================
+
+Table hub_source_system {
+  hub_source_system_key varchar(32) [pk]
+  source_system_id varchar(50) [unique, not null]
+  source_system_name varchar(100) [not null]
+  load_date timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  record_source varchar(100) [not null]
+  
+  Note: 'Хаб систем-источников данных'
+}
+
+Table hub_user {
+  hub_user_key varchar(32) [pk]
+  user_external_id uuid [not null]
+  source_system_id varchar(50) [not null]
+  hub_source_system_key varchar(32) [not null, ref: > hub_source_system.hub_source_system_key]
+  load_date timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  record_source varchar(100) [not null]
+  
+  Note: 'Хаб пользователей'
+}
+
+Table hub_address {
+  hub_address_key varchar(32) [pk]
+  address_external_id uuid [not null]
+  source_system_id varchar(50) [not null]
+  hub_source_system_key varchar(32) [not null, ref: > hub_source_system.hub_source_system_key]
+  load_date timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  record_source varchar(100) [not null]
+  
+  Note: 'Хаб адресов'
+}
+
+Table hub_order {
+  hub_order_key varchar(32) [pk]
+  order_external_id uuid [not null]
+  source_system_id varchar(50) [not null]
+  hub_source_system_key varchar(32) [not null, ref: > hub_source_system.hub_source_system_key]
+  load_date timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  record_source varchar(100) [not null]
+  
+  Note: 'Хаб заказов'
+}
+
+Table hub_product {
+  hub_product_key varchar(32) [pk]
+  product_sku varchar(255) [not null]
+  source_system_id varchar(50) [not null]
+  hub_source_system_key varchar(32) [not null, ref: > hub_source_system.hub_source_system_key]
+  load_date timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  record_source varchar(100) [not null]
+  
+  Note: 'Хаб товаров'
+}
+
+Table hub_shipment {
+  hub_shipment_key varchar(32) [pk]
+  shipment_external_id uuid [not null]
+  source_system_id varchar(50) [not null]
+  hub_source_system_key varchar(32) [not null, ref: > hub_source_system.hub_source_system_key]
+  load_date timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  record_source varchar(100) [not null]
+  
+  Note: 'Хаб отгрузок'
+}
+
+Table hub_warehouse {
+  hub_warehouse_key varchar(32) [pk]
+  warehouse_code varchar(255) [not null]
+  source_system_id varchar(50) [not null]
+  hub_source_system_key varchar(32) [not null, ref: > hub_source_system.hub_source_system_key]
+  load_date timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  record_source varchar(100) [not null]
+  
+  Note: 'Хаб складов'
+}
+
+Table hub_pickup_point {
+  hub_pickup_point_key varchar(32) [pk]
+  pickup_point_code varchar(255) [not null]
+  source_system_id varchar(50) [not null]
+  hub_source_system_key varchar(32) [not null, ref: > hub_source_system.hub_source_system_key]
+  load_date timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  record_source varchar(100) [not null]
+  
+  Note: 'Хаб пунктов выдачи'
+}
+
+// =====================================================
+// ЛИНКИ (LINKS) - Связи между хабами
+// =====================================================
+
+Table link_user_address {
+  link_user_address_key varchar(32) [pk]
+  hub_user_key varchar(32) [not null, ref: > hub_user.hub_user_key]
+  hub_address_key varchar(32) [not null, ref: > hub_address.hub_address_key]
+  load_date timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  record_source varchar(100) [not null]
+  
+  Note: 'Связь пользователь-адрес'
+}
+
+Table link_order_user {
+  link_order_user_key varchar(32) [pk]
+  hub_order_key varchar(32) [not null, ref: > hub_order.hub_order_key]
+  hub_user_key varchar(32) [not null, ref: > hub_user.hub_user_key]
+  load_date timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  record_source varchar(100) [not null]
+  
+  Note: 'Связь заказ-пользователь'
+}
+
+Table link_order_address {
+  link_order_address_key varchar(32) [pk]
+  hub_order_key varchar(32) [not null, ref: > hub_order.hub_order_key]
+  hub_address_key varchar(32) [not null, ref: > hub_address.hub_address_key]
+  load_date timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  record_source varchar(100) [not null]
+  
+  Note: 'Связь заказ-адрес доставки'
+}
+
+Table link_order_item {
+  link_order_item_key varchar(32) [pk]
+  hub_order_key varchar(32) [not null, ref: > hub_order.hub_order_key]
+  hub_product_key varchar(32) [not null, ref: > hub_product.hub_product_key]
+  load_date timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  record_source varchar(100) [not null]
+  
+  Note: 'Связь заказ-товар (позиция заказа)'
+}
+
+Table link_shipment_order {
+  link_shipment_order_key varchar(32) [pk]
+  hub_shipment_key varchar(32) [not null, ref: > hub_shipment.hub_shipment_key]
+  hub_order_key varchar(32) [not null, ref: > hub_order.hub_order_key]
+  load_date timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  record_source varchar(100) [not null]
+  
+  Note: 'Связь отгрузка-заказ'
+}
+
+Table link_shipment_warehouse {
+  link_shipment_warehouse_key varchar(32) [pk]
+  hub_shipment_key varchar(32) [not null, ref: > hub_shipment.hub_shipment_key]
+  hub_warehouse_key varchar(32) [not null, ref: > hub_warehouse.hub_warehouse_key]
+  load_date timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  record_source varchar(100) [not null]
+  
+  Note: 'Связь отгрузка-склад отправления'
+}
+
+Table link_shipment_pickup_point {
+  link_shipment_pickup_point_key varchar(32) [pk]
+  hub_shipment_key varchar(32) [not null, ref: > hub_shipment.hub_shipment_key]
+  hub_pickup_point_key varchar(32) [not null, ref: > hub_pickup_point.hub_pickup_point_key]
+  load_date timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  record_source varchar(100) [not null]
+  
+  Note: 'Связь отгрузка-пункт выдачи'
+}
+
+Table link_shipment_address {
+  link_shipment_address_key varchar(32) [pk]
+  hub_shipment_key varchar(32) [not null, ref: > hub_shipment.hub_shipment_key]
+  hub_address_key varchar(32) [not null, ref: > hub_address.hub_address_key]
+  load_date timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  record_source varchar(100) [not null]
+  
+  Note: 'Связь отгрузка-адрес доставки'
+}
+
+// =====================================================
+// САТТЕЛИТЫ (SATELLITES) - Описательные атрибуты
+// =====================================================
+
+Table sat_user_details {
+  hub_user_key varchar(32) [pk, ref: > hub_user.hub_user_key]
+  load_date timestamp [pk, default: `CURRENT_TIMESTAMP`]
+  load_end_date timestamp
+  record_source varchar(100) [not null]
+  email varchar(255)
+  first_name varchar(255)
+  last_name varchar(255)
+  phone varchar(50)
+  date_of_birth date
+  registration_date timestamp
+  status varchar(50)
+  effective_from timestamp
+  effective_to timestamp
+  is_current boolean
+  created_at timestamp
+  updated_at timestamp
+  created_by varchar(255)
+  updated_by varchar(255)
+  
+  Note: 'Саттелит деталей пользователя'
+}
+
+Table sat_user_address_details {
+  hub_address_key varchar(32) [pk, ref: > hub_address.hub_address_key]
+  load_date timestamp [pk, default: `CURRENT_TIMESTAMP`]
+  load_end_date timestamp
+  record_source varchar(100) [not null]
+  address_type varchar(50)
+  country varchar(100)
+  region varchar(100)
+  city varchar(100)
+  street_address varchar(255)
+  postal_code varchar(20)
+  apartment varchar(50)
+  is_default boolean
+  effective_from timestamp
+  effective_to timestamp
+  is_current boolean
+  created_at timestamp
+  updated_at timestamp
+  created_by varchar(255)
+  updated_by varchar(255)
+  
+  Note: 'Саттелит деталей адреса'
+}
+
+Table sat_user_status_history {
+  hub_user_key varchar(32) [pk, ref: > hub_user.hub_user_key]
+  changed_at timestamp [pk]
+  load_date timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  record_source varchar(100) [not null]
+  old_status varchar(50)
+  new_status varchar(50) [not null]
+  change_reason varchar(255)
+  session_id varchar(255)
+  ip_address inet
+  user_agent text
+  
+  Note: 'Саттелит истории статусов пользователя'
+}
+
+Table sat_order_details {
+  hub_order_key varchar(32) [pk, ref: > hub_order.hub_order_key]
+  load_date timestamp [pk, default: `CURRENT_TIMESTAMP`]
+  load_end_date timestamp
+  record_source varchar(100) [not null]
+  order_number varchar(255)
+  order_date timestamp
+  status varchar(50)
+  delivery_type varchar(50)
+  expected_delivery_date date
+  actual_delivery_date date
+  payment_method varchar(50)
+  payment_status varchar(50)
+  effective_from timestamp
+  effective_to timestamp
+  is_current boolean
+  created_at timestamp
+  updated_at timestamp
+  created_by varchar(255)
+  updated_by varchar(255)
+  
+  Note: 'Саттелит деталей заказа'
+}
+
+Table sat_order_financial {
+  hub_order_key varchar(32) [pk, ref: > hub_order.hub_order_key]
+  load_date timestamp [pk, default: `CURRENT_TIMESTAMP`]
+  load_end_date timestamp
+  record_source varchar(100) [not null]
+  subtotal decimal(15,2)
+  tax_amount decimal(15,2)
+  shipping_cost decimal(15,2)
+  discount_amount decimal(15,2)
+  total_amount decimal(15,2)
+  currency varchar(3)
+  effective_from timestamp
+  effective_to timestamp
+  is_current boolean
+  
+  Note: 'Саттелит финансовых данных заказа'
+}
+
+Table sat_product_details {
+  hub_product_key varchar(32) [pk, ref: > hub_product.hub_product_key]
+  load_date timestamp [pk, default: `CURRENT_TIMESTAMP`]
+  load_end_date timestamp
+  record_source varchar(100) [not null]
+  product_name varchar(255)
+  category varchar(255)
+  brand varchar(255)
+  weight_grams integer
+  dimensions_length_cm decimal(8,2)
+  dimensions_width_cm decimal(8,2)
+  dimensions_height_cm decimal(8,2)
+  is_active boolean
+  effective_from timestamp
+  effective_to timestamp
+  is_current boolean
+  created_at timestamp
+  updated_at timestamp
+  created_by varchar(255)
+  updated_by varchar(255)
+  
+  Note: 'Саттелит деталей товара'
+}
+
+Table sat_product_price {
+  hub_product_key varchar(32) [pk, ref: > hub_product.hub_product_key]
+  load_date timestamp [pk, default: `CURRENT_TIMESTAMP`]
+  load_end_date timestamp
+  record_source varchar(100) [not null]
+  price decimal(15,2)
+  currency varchar(3)
+  effective_from timestamp
+  effective_to timestamp
+  is_current boolean
+  
+  Note: 'Саттелит цены товара'
+}
+
+Table sat_order_item_details {
+  link_order_item_key varchar(32) [pk, ref: > link_order_item.link_order_item_key]
+  load_date timestamp [pk, default: `CURRENT_TIMESTAMP`]
+  load_end_date timestamp
+  record_source varchar(100) [not null]
+  quantity integer
+  unit_price decimal(15,2)
+  total_price decimal(15,2)
+  product_name_snapshot varchar(255)
+  product_category_snapshot varchar(255)
+  product_brand_snapshot varchar(255)
+  created_at timestamp
+  updated_at timestamp
+  created_by varchar(255)
+  updated_by varchar(255)
+  
+  Note: 'Саттелит деталей позиции заказа'
+}
+
+Table sat_order_status_history {
+  hub_order_key varchar(32) [pk, ref: > hub_order.hub_order_key]
+  changed_at timestamp [pk]
+  load_date timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  record_source varchar(100) [not null]
+  old_status varchar(50)
+  new_status varchar(50) [not null]
+  change_reason varchar(255)
+  changed_by varchar(255)
+  session_id varchar(255)
+  ip_address inet
+  notes text
+  
+  Note: 'Саттелит истории статусов заказа'
+}
+
+Table sat_warehouse_details {
+  hub_warehouse_key varchar(32) [pk, ref: > hub_warehouse.hub_warehouse_key]
+  load_date timestamp [pk, default: `CURRENT_TIMESTAMP`]
+  load_end_date timestamp
+  record_source varchar(100) [not null]
+  warehouse_name varchar(255)
+  warehouse_type varchar(100)
+  country varchar(100)
+  region varchar(100)
+  city varchar(100)
+  street_address varchar(255)
+  postal_code varchar(20)
+  is_active boolean
+  max_capacity_cubic_meters decimal(10,2)
+  operating_hours varchar(255)
+  contact_phone varchar(50)
+  manager_name varchar(255)
+  effective_from timestamp
+  effective_to timestamp
+  is_current boolean
+  created_at timestamp
+  updated_at timestamp
+  created_by varchar(255)
+  updated_by varchar(255)
+  
+  Note: 'Саттелит деталей склада'
+}
+
+Table sat_pickup_point_details {
+  hub_pickup_point_key varchar(32) [pk, ref: > hub_pickup_point.hub_pickup_point_key]
+  load_date timestamp [pk, default: `CURRENT_TIMESTAMP`]
+  load_end_date timestamp
+  record_source varchar(100) [not null]
+  pickup_point_name varchar(255)
+  pickup_point_type varchar(100)
+  country varchar(100)
+  region varchar(100)
+  city varchar(100)
+  street_address varchar(255)
+  postal_code varchar(20)
+  is_active boolean
+  max_capacity_packages integer
+  operating_hours varchar(255)
+  contact_phone varchar(50)
+  partner_name varchar(255)
+  effective_from timestamp
+  effective_to timestamp
+  is_current boolean
+  created_at timestamp
+  updated_at timestamp
+  created_by varchar(255)
+  updated_by varchar(255)
+  
+  Note: 'Саттелит деталей пункта выдачи'
+}
+
+Table sat_shipment_details {
+  hub_shipment_key varchar(32) [pk, ref: > hub_shipment.hub_shipment_key]
+  load_date timestamp [pk, default: `CURRENT_TIMESTAMP`]
+  load_end_date timestamp
+  record_source varchar(100) [not null]
+  tracking_number varchar(255)
+  status varchar(50)
+  weight_grams integer
+  volume_cubic_cm integer
+  package_count integer
+  destination_type varchar(50)
+  created_date timestamp
+  dispatched_date timestamp
+  estimated_delivery_date timestamp
+  actual_delivery_date timestamp
+  delivery_notes text
+  recipient_name varchar(255)
+  delivery_signature varchar(255)
+  effective_from timestamp
+  effective_to timestamp
+  is_current boolean
+  created_at timestamp
+  updated_at timestamp
+  created_by varchar(255)
+  updated_by varchar(255)
+  
+  Note: 'Саттелит деталей отгрузки'
+}
+
+Table sat_shipment_movement_details {
+  hub_shipment_key varchar(32) [pk, ref: > hub_shipment.hub_shipment_key]
+  movement_datetime timestamp [pk]
+  load_date timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  record_source varchar(100) [not null]
+  movement_type varchar(50)
+  location_type varchar(50)
+  location_code varchar(255)
+  operator_name varchar(255)
+  notes text
+  latitude decimal(10,8)
+  longitude decimal(11,8)
+  created_at timestamp
+  created_by varchar(255)
+  
+  Note: 'Саттелит деталей перемещений отгрузки'
+}
+
+Table sat_shipment_status_history {
+  hub_shipment_key varchar(32) [pk, ref: > hub_shipment.hub_shipment_key]
+  changed_at timestamp [pk]
+  load_date timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  record_source varchar(100) [not null]
+  old_status varchar(50)
+  new_status varchar(50) [not null]
+  change_reason varchar(255)
+  changed_by varchar(255)
+  location_type varchar(50)
+  location_code varchar(255)
+  notes text
+  customer_notified boolean
+  
+  Note: 'Саттелит истории статусов отгрузки'
+}
+
