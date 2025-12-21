@@ -1,5 +1,7 @@
 # Домашнее задание №1+2: Детальный слой DWH
 
+чтобы проект запустился нужно еще добавить в проект папку HSE_FTiAD_DWH/init-script/sql/mock_data с содержимым из https://disk.360.yandex.ru/d/5KJFK2Ly0S0Drg  (тут лежат csv файлы)
+
 ## Описание
 
 Реализована настройка PostgreSQL 15 с физической потоковой репликацией (streaming replication) между мастером и репликой. Создана инфраструктура с тремя базами данных (user_service_db, order_service_db, logistics_service_db) и когортным анализом клиентов. Реализован детальный слой DWH на основе архитектуры Data Vault 2.0 с интеграцией данных через Debezium CDC и Kafka.
