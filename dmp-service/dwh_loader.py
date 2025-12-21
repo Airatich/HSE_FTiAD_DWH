@@ -110,10 +110,56 @@ class DWHLoader:
                 'email', 'first_name', 'last_name', 'phone', 'date_of_birth',
                 'registration_date', 'status', 'effective_from', 'effective_to',
                 'is_current', 'created_at', 'updated_at', 'created_by', 'updated_by'
+            },
+            'sat_user_address_details': {
+                'address_line1', 'address_line2', 'city', 'region', 'postal_code',
+                'country', 'address_type', 'is_default', 'effective_from', 'effective_to',
+                'is_current', 'created_at', 'updated_at', 'created_by', 'updated_by'
+            },
+            'sat_order_details': {
+                'order_number', 'order_date', 'status', 'delivery_type',
+                'expected_delivery_date', 'actual_delivery_date', 'payment_method',
+                'payment_status', 'effective_from', 'effective_to', 'is_current',
+                'created_at', 'updated_at', 'created_by', 'updated_by'
+            },
+            'sat_product_details': {
+                'product_name', 'category', 'brand', 'weight_grams',
+                'dimensions_length_cm', 'dimensions_width_cm', 'dimensions_height_cm',
+                'is_active', 'effective_from', 'effective_to', 'is_current',
+                'created_at', 'updated_at', 'created_by', 'updated_by'
+            },
+            'sat_shipment_details': {
+                'tracking_number', 'status', 'weight_grams', 'volume_cubic_cm',
+                'package_count', 'destination_type', 'created_date', 'dispatched_date',
+                'estimated_delivery_date', 'actual_delivery_date', 'delivery_notes',
+                'recipient_name', 'delivery_signature', 'effective_from', 'effective_to',
+                'is_current', 'created_at', 'updated_at', 'created_by', 'updated_by'
+            },
+            'sat_warehouse_details': {
+                'warehouse_name', 'warehouse_type', 'address', 'city', 'region',
+                'postal_code', 'country', 'latitude', 'longitude', 'capacity_cubic_meters',
+                'is_active', 'effective_from', 'effective_to', 'is_current',
+                'created_at', 'updated_at', 'created_by', 'updated_by'
+            },
+            'sat_pickup_point_details': {
+                'pickup_point_name', 'pickup_point_type', 'country', 'region', 'city',
+                'street_address', 'postal_code', 'is_active', 'max_capacity_packages',
+                'operating_hours', 'contact_phone', 'partner_name', 'effective_from',
+                'effective_to', 'is_current', 'created_at', 'updated_at', 'created_by', 'updated_by'
             }
         }
         
+        # Если маппинга нет, используем все поля из data (кроме служебных)
         fields = sat_fields_map.get(sat_name, set())
+        if not fields:
+            # Используем все поля, кроме служебных
+            exclude_fields = {'id', 'hub_key', 'load_date', 'record_source', 'load_end_date', 
+                            'shipment_id', 'order_id', 'product_id', 'user_id', 'warehouse_id',
+                            'pickup_point_id', 'address_id', 'shipment_external_id', 'order_external_id',
+                            'user_external_id', 'product_sku', 'warehouse_code', 'pickup_point_code',
+                            'address_external_id'}
+            fields = set(data.keys()) - exclude_fields
+            logger.debug(f"No explicit field mapping for {sat_name}, using all fields except: {exclude_fields}")
         sat_fields = {}
         
         # Извлекаем поля из данных
@@ -121,7 +167,10 @@ class DWHLoader:
             if field in data and data[field] is not None:
                 value = data[field]
                 # Преобразуем даты и timestamp
-                if field in ['date_of_birth', 'registration_date', 'effective_from', 'effective_to', 'created_at', 'updated_at']:
+                date_fields = ['date_of_birth', 'registration_date', 'effective_from', 'effective_to', 
+                              'created_at', 'updated_at', 'order_date', 'created_date', 'dispatched_date',
+                              'estimated_delivery_date', 'actual_delivery_date', 'expected_delivery_date']
+                if field in date_fields:
                     original_value = value
                     if isinstance(value, (int, float)):
                         # Специальная обработка для date_of_birth (может быть в формате дней с 2000-01-01)

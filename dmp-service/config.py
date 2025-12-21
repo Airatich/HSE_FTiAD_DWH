@@ -8,7 +8,8 @@ load_dotenv()
 
 # Kafka настройки
 KAFKA_BOOTSTRAP_SERVERS = os.getenv('KAFKA_BOOTSTRAP_SERVERS', 'localhost:9092')
-KAFKA_TOPIC_PREFIX = os.getenv('KAFKA_TOPIC_PREFIX', 'postgres-master.public')
+# Подписываемся на все топики от всех коннекторов
+KAFKA_TOPIC_PREFIX = os.getenv('KAFKA_TOPIC_PREFIX', 'postgres-master')
 KAFKA_CONSUMER_GROUP = os.getenv('KAFKA_CONSUMER_GROUP', 'dmp-service-group')
 
 # PostgreSQL DWH настройки

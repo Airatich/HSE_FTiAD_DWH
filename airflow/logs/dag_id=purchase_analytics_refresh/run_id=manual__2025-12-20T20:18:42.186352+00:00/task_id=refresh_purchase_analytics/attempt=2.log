@@ -1,0 +1,30 @@
+[2025-12-20T20:23:47.638+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: purchase_analytics_refresh.refresh_purchase_analytics manual__2025-12-20T20:18:42.186352+00:00 [queued]>
+[2025-12-20T20:23:47.644+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: purchase_analytics_refresh.refresh_purchase_analytics manual__2025-12-20T20:18:42.186352+00:00 [queued]>
+[2025-12-20T20:23:47.644+0000] {taskinstance.py:2171} INFO - Starting attempt 2 of 2
+[2025-12-20T20:23:47.655+0000] {taskinstance.py:2192} INFO - Executing <Task(PythonOperator): refresh_purchase_analytics> on 2025-12-20 20:18:42.186352+00:00
+[2025-12-20T20:23:47.682+0000] {standard_task_runner.py:60} INFO - Started process 378 to run task
+[2025-12-20T20:23:47.691+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'purchase_analytics_refresh', 'refresh_purchase_analytics', 'manual__2025-12-20T20:18:42.186352+00:00', '--job-id', '35', '--raw', '--subdir', 'DAGS_FOLDER/purchase_analytics_dag.py', '--cfg-path', '/tmp/tmp_lbc2eoj']
+[2025-12-20T20:23:47.694+0000] {standard_task_runner.py:88} INFO - Job 35: Subtask refresh_purchase_analytics
+[2025-12-20T20:23:47.767+0000] {task_command.py:423} INFO - Running <TaskInstance: purchase_analytics_refresh.refresh_purchase_analytics manual__2025-12-20T20:18:42.186352+00:00 [running]> on host 027454bf560a
+[2025-12-20T20:23:48.121+0000] {taskinstance.py:2481} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='purchase_analytics_refresh' AIRFLOW_CTX_TASK_ID='refresh_purchase_analytics' AIRFLOW_CTX_EXECUTION_DATE='2025-12-20T20:18:42.186352+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-12-20T20:18:42.186352+00:00'
+[2025-12-20T20:23:48.325+0000] {taskinstance.py:2699} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/purchase_analytics_dag.py", line 74, in refresh_purchase_analytics
+    raise e
+  File "/opt/airflow/dags/purchase_analytics_dag.py", line 68, in refresh_purchase_analytics
+    cur.execute(sql)
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "purchase_analytics_pkey"
+DETAIL:  Key (purchase_date, product_id, supplier_id)=(2025-12-20, 903803821, 1768620816) already exists.
+
+[2025-12-20T20:23:48.336+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=purchase_analytics_refresh, task_id=refresh_purchase_analytics, execution_date=20251220T201842, start_date=20251220T202347, end_date=20251220T202348
+[2025-12-20T20:23:48.349+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 35 for task refresh_purchase_analytics (duplicate key value violates unique constraint "purchase_analytics_pkey"
+DETAIL:  Key (purchase_date, product_id, supplier_id)=(2025-12-20, 903803821, 1768620816) already exists.
+; 378)
+[2025-12-20T20:23:48.381+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-12-20T20:23:48.400+0000] {taskinstance.py:3281} INFO - 0 downstream tasks scheduled from follow-on schedule check

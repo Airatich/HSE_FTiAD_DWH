@@ -1,0 +1,31 @@
+{
+  "name": "postgres-connector-logistics-service",
+  "config": {
+    "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+    "tasks.max": "1",
+    "database.hostname": "postgres-master",
+    "database.port": "5432",
+    "database.user": "postgres",
+    "database.password": "postgres",
+    "database.dbname": "logistics_service_db",
+    "database.server.name": "postgres-master-logistics",
+    "snapshot.mode": "initial",
+    "plugin.name": "pgoutput",
+    "slot.name": "debezium_slot_logistics_service",
+    "publication.name": "debezium_publication_logistics",
+    "publication.autocreate.mode": "all_tables",
+    "table.include.list": "public.shipments,public.warehouses,public.pickup_points,public.shipment_movements,public.shipment_status_history",
+    "schema.include.list": "public",
+    "topic.prefix": "postgres-master-logistics",
+    "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "key.converter.schemas.enable": "false",
+    "value.converter.schemas.enable": "false",
+    "transforms": "unwrap",
+    "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",
+    "transforms.unwrap.drop.tombstones": "false",
+    "transforms.unwrap.delete.handling.mode": "rewrite",
+    "transforms.unwrap.add.fields": "op,source.ts_ms,source.lsn"
+  }
+}
+

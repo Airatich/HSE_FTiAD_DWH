@@ -30,11 +30,14 @@ class KafkaEventConsumer:
             )
             
             import re
+            # Подписываемся на все топики от всех коннекторов (postgres-master, postgres-master-order, postgres-master-logistics)
+            # Паттерн: postgres-master.* (включает все варианты)
             escaped_prefix = KAFKA_TOPIC_PREFIX.replace('.', r'\.')
             pattern = re.compile(f"^{escaped_prefix}.*")
             self.consumer.subscribe(pattern=pattern)
             
             logger.info(f"Kafka consumer initialized, subscribed to pattern: {KAFKA_TOPIC_PREFIX}.*")
+            logger.info("Will consume from topics: postgres-master.*, postgres-master-order.*, postgres-master-logistics.*")
         except Exception as e:
             logger.error(f"Failed to initialize Kafka consumer: {e}")
             raise
@@ -79,9 +82,15 @@ class KafkaEventConsumer:
                     op = 'c'
                     logger.debug(f"Defaulting to INSERT")
             
-            # Определяем source_system_id
-            db = source.get('db', 'postgres')
-            if table in ['users', 'user_addresses', 'user_status_history']:
+            # Определяем source_system_id по имени базы данных
+            db = source.get('db', '')
+            from config import SOURCE_SYSTEM_MAPPING
+            
+            # Сначала пытаемся определить по имени базы данных
+            if db in SOURCE_SYSTEM_MAPPING:
+                source_system_id = SOURCE_SYSTEM_MAPPING[db]
+            # Если не получилось, определяем по имени таблицы (fallback)
+            elif table in ['users', 'user_addresses', 'user_status_history']:
                 source_system_id = 'user_service'
             elif table in ['orders', 'products', 'order_items', 'order_status_history']:
                 source_system_id = 'order_service'
@@ -89,6 +98,9 @@ class KafkaEventConsumer:
                 source_system_id = 'logistics_service'
             else:
                 source_system_id = 'user_service'  # default
+                logger.warning(f"Could not determine source_system_id for db={db}, table={table}, using default: user_service")
+            
+            logger.debug(f"Determined source_system_id: {source_system_id} for db={db}, table={table}")
             
             # Обрабатываем в зависимости от операции
             if op == 'c' or op is None:  # Create (INSERT)

@@ -1,0 +1,147 @@
+[2025-12-21T15:23:03.791+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: warehouse_delivery_refresh.refresh_warehouse_delivery scheduled__2025-12-20T03:00:00+00:00 [queued]>
+[2025-12-21T15:23:03.796+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: warehouse_delivery_refresh.refresh_warehouse_delivery scheduled__2025-12-20T03:00:00+00:00 [queued]>
+[2025-12-21T15:23:03.797+0000] {taskinstance.py:2171} INFO - Starting attempt 1 of 2
+[2025-12-21T15:23:03.812+0000] {taskinstance.py:2192} INFO - Executing <Task(PythonOperator): refresh_warehouse_delivery> on 2025-12-20 03:00:00+00:00
+[2025-12-21T15:23:03.818+0000] {standard_task_runner.py:60} INFO - Started process 69 to run task
+[2025-12-21T15:23:03.822+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'warehouse_delivery_refresh', 'refresh_warehouse_delivery', 'scheduled__2025-12-20T03:00:00+00:00', '--job-id', '42', '--raw', '--subdir', 'DAGS_FOLDER/warehouse_delivery_dag.py', '--cfg-path', '/tmp/tmphqtc8n2s']
+[2025-12-21T15:23:03.826+0000] {standard_task_runner.py:88} INFO - Job 42: Subtask refresh_warehouse_delivery
+[2025-12-21T15:23:03.887+0000] {task_command.py:423} INFO - Running <TaskInstance: warehouse_delivery_refresh.refresh_warehouse_delivery scheduled__2025-12-20T03:00:00+00:00 [running]> on host 56419edd45e9
+[2025-12-21T15:23:04.276+0000] {taskinstance.py:2481} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='warehouse_delivery_refresh' AIRFLOW_CTX_TASK_ID='refresh_warehouse_delivery' AIRFLOW_CTX_EXECUTION_DATE='2025-12-20T03:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-12-20T03:00:00+00:00'
+[2025-12-21T15:23:04.293+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.8/site-packages/***/utils/context.py:315 AirflowContextDeprecationWarning: Accessing 'execution_date' from the template is deprecated and will be removed in a future version. Please use 'data_interval_start' or 'logical_date' instead.
+[2025-12-21T15:23:04.293+0000] {logging_mixin.py:188} INFO - Обновление витрины 'Доставка по складам' за дату: 2025-12-20
+[2025-12-21T15:23:04.393+0000] {logging_mixin.py:188} INFO - Витрина 'Доставка по складам' успешно обновлена за дату: 2025-12-20
+[2025-12-21T15:23:04.393+0000] {python.py:201} INFO - Done. Returned value was: None
+[2025-12-21T15:23:04.406+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=warehouse_delivery_refresh, task_id=refresh_warehouse_delivery, execution_date=20251220T030000, start_date=20251221T152303, end_date=20251221T152304
+[2025-12-21T15:23:04.458+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-12-21T15:23:04.478+0000] {taskinstance.py:3281} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-12-21T15:47:30.233+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: warehouse_delivery_refresh.refresh_warehouse_delivery scheduled__2025-12-20T03:00:00+00:00 [queued]>
+[2025-12-21T15:47:30.238+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: warehouse_delivery_refresh.refresh_warehouse_delivery scheduled__2025-12-20T03:00:00+00:00 [queued]>
+[2025-12-21T15:47:30.239+0000] {taskinstance.py:2171} INFO - Starting attempt 1 of 2
+[2025-12-21T15:47:30.246+0000] {taskinstance.py:2192} INFO - Executing <Task(PythonOperator): refresh_warehouse_delivery> on 2025-12-20 03:00:00+00:00
+[2025-12-21T15:47:30.249+0000] {standard_task_runner.py:60} INFO - Started process 96 to run task
+[2025-12-21T15:47:30.252+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'warehouse_delivery_refresh', 'refresh_warehouse_delivery', 'scheduled__2025-12-20T03:00:00+00:00', '--job-id', '3', '--raw', '--subdir', 'DAGS_FOLDER/warehouse_delivery_dag.py', '--cfg-path', '/tmp/tmp8x7x76dh']
+[2025-12-21T15:47:30.256+0000] {standard_task_runner.py:88} INFO - Job 3: Subtask refresh_warehouse_delivery
+[2025-12-21T15:47:30.304+0000] {task_command.py:423} INFO - Running <TaskInstance: warehouse_delivery_refresh.refresh_warehouse_delivery scheduled__2025-12-20T03:00:00+00:00 [running]> on host 17b362db6158
+[2025-12-21T15:47:30.478+0000] {taskinstance.py:2481} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='warehouse_delivery_refresh' AIRFLOW_CTX_TASK_ID='refresh_warehouse_delivery' AIRFLOW_CTX_EXECUTION_DATE='2025-12-20T03:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-12-20T03:00:00+00:00'
+[2025-12-21T15:47:30.492+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.8/site-packages/***/utils/context.py:315 AirflowContextDeprecationWarning: Accessing 'execution_date' from the template is deprecated and will be removed in a future version. Please use 'data_interval_start' or 'logical_date' instead.
+[2025-12-21T15:47:30.493+0000] {logging_mixin.py:188} INFO - Обновление витрины 'Доставка по складам' за дату: 2025-12-20
+[2025-12-21T15:47:30.538+0000] {logging_mixin.py:188} INFO - Витрина 'Доставка по складам' успешно обновлена за дату: 2025-12-20
+[2025-12-21T15:47:30.538+0000] {python.py:201} INFO - Done. Returned value was: None
+[2025-12-21T15:47:30.548+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=warehouse_delivery_refresh, task_id=refresh_warehouse_delivery, execution_date=20251220T030000, start_date=20251221T154730, end_date=20251221T154730
+[2025-12-21T15:47:30.596+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-12-21T15:47:30.613+0000] {taskinstance.py:3281} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-12-21T15:57:36.641+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: warehouse_delivery_refresh.refresh_warehouse_delivery scheduled__2025-12-20T03:00:00+00:00 [queued]>
+[2025-12-21T15:57:36.646+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: warehouse_delivery_refresh.refresh_warehouse_delivery scheduled__2025-12-20T03:00:00+00:00 [queued]>
+[2025-12-21T15:57:36.647+0000] {taskinstance.py:2171} INFO - Starting attempt 1 of 2
+[2025-12-21T15:57:36.654+0000] {taskinstance.py:2192} INFO - Executing <Task(PythonOperator): refresh_warehouse_delivery> on 2025-12-20 03:00:00+00:00
+[2025-12-21T15:57:36.658+0000] {standard_task_runner.py:60} INFO - Started process 73 to run task
+[2025-12-21T15:57:36.661+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'warehouse_delivery_refresh', 'refresh_warehouse_delivery', 'scheduled__2025-12-20T03:00:00+00:00', '--job-id', '3', '--raw', '--subdir', 'DAGS_FOLDER/warehouse_delivery_dag.py', '--cfg-path', '/tmp/tmpwzqlx6jl']
+[2025-12-21T15:57:36.663+0000] {standard_task_runner.py:88} INFO - Job 3: Subtask refresh_warehouse_delivery
+[2025-12-21T15:57:36.715+0000] {task_command.py:423} INFO - Running <TaskInstance: warehouse_delivery_refresh.refresh_warehouse_delivery scheduled__2025-12-20T03:00:00+00:00 [running]> on host 6f2359622a7c
+[2025-12-21T15:57:36.880+0000] {taskinstance.py:2481} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='warehouse_delivery_refresh' AIRFLOW_CTX_TASK_ID='refresh_warehouse_delivery' AIRFLOW_CTX_EXECUTION_DATE='2025-12-20T03:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-12-20T03:00:00+00:00'
+[2025-12-21T15:57:36.894+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.8/site-packages/***/utils/context.py:315 AirflowContextDeprecationWarning: Accessing 'execution_date' from the template is deprecated and will be removed in a future version. Please use 'data_interval_start' or 'logical_date' instead.
+[2025-12-21T15:57:36.894+0000] {logging_mixin.py:188} INFO - Обновление витрины 'Доставка по складам' за дату: 2025-12-20
+[2025-12-21T15:57:36.933+0000] {logging_mixin.py:188} INFO - Витрина 'Доставка по складам' успешно обновлена за дату: 2025-12-20
+[2025-12-21T15:57:36.933+0000] {python.py:201} INFO - Done. Returned value was: None
+[2025-12-21T15:57:36.948+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=warehouse_delivery_refresh, task_id=refresh_warehouse_delivery, execution_date=20251220T030000, start_date=20251221T155736, end_date=20251221T155736
+[2025-12-21T15:57:36.962+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-12-21T15:57:36.979+0000] {taskinstance.py:3281} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-12-21T16:05:46.930+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: warehouse_delivery_refresh.refresh_warehouse_delivery scheduled__2025-12-20T03:00:00+00:00 [queued]>
+[2025-12-21T16:05:46.935+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: warehouse_delivery_refresh.refresh_warehouse_delivery scheduled__2025-12-20T03:00:00+00:00 [queued]>
+[2025-12-21T16:05:46.935+0000] {taskinstance.py:2171} INFO - Starting attempt 1 of 2
+[2025-12-21T16:05:46.942+0000] {taskinstance.py:2192} INFO - Executing <Task(PythonOperator): refresh_warehouse_delivery> on 2025-12-20 03:00:00+00:00
+[2025-12-21T16:05:46.945+0000] {standard_task_runner.py:60} INFO - Started process 66 to run task
+[2025-12-21T16:05:46.947+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'warehouse_delivery_refresh', 'refresh_warehouse_delivery', 'scheduled__2025-12-20T03:00:00+00:00', '--job-id', '3', '--raw', '--subdir', 'DAGS_FOLDER/warehouse_delivery_dag.py', '--cfg-path', '/tmp/tmprimd67aw']
+[2025-12-21T16:05:46.950+0000] {standard_task_runner.py:88} INFO - Job 3: Subtask refresh_warehouse_delivery
+[2025-12-21T16:05:46.994+0000] {task_command.py:423} INFO - Running <TaskInstance: warehouse_delivery_refresh.refresh_warehouse_delivery scheduled__2025-12-20T03:00:00+00:00 [running]> on host ba6a44c4c07b
+[2025-12-21T16:05:47.132+0000] {taskinstance.py:2481} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='warehouse_delivery_refresh' AIRFLOW_CTX_TASK_ID='refresh_warehouse_delivery' AIRFLOW_CTX_EXECUTION_DATE='2025-12-20T03:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-12-20T03:00:00+00:00'
+[2025-12-21T16:05:47.140+0000] {taskinstance.py:2699} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/warehouse_delivery_dag.py", line 40, in refresh_warehouse_delivery
+    print(f"Обновление витрины 'Доставка по складам' за дату: {business_date}")
+NameError: name 'business_date' is not defined
+[2025-12-21T16:05:47.148+0000] {taskinstance.py:1138} INFO - Marking task as UP_FOR_RETRY. dag_id=warehouse_delivery_refresh, task_id=refresh_warehouse_delivery, execution_date=20251220T030000, start_date=20251221T160546, end_date=20251221T160547
+[2025-12-21T16:05:47.156+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 3 for task refresh_warehouse_delivery (name 'business_date' is not defined; 66)
+[2025-12-21T16:05:47.166+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-12-21T16:05:47.181+0000] {taskinstance.py:3281} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-12-21T16:20:50.681+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: warehouse_delivery_refresh.refresh_warehouse_delivery scheduled__2025-12-20T03:00:00+00:00 [queued]>
+[2025-12-21T16:20:50.686+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: warehouse_delivery_refresh.refresh_warehouse_delivery scheduled__2025-12-20T03:00:00+00:00 [queued]>
+[2025-12-21T16:20:50.686+0000] {taskinstance.py:2171} INFO - Starting attempt 1 of 2
+[2025-12-21T16:20:50.693+0000] {taskinstance.py:2192} INFO - Executing <Task(PythonOperator): refresh_warehouse_delivery> on 2025-12-20 03:00:00+00:00
+[2025-12-21T16:20:50.696+0000] {standard_task_runner.py:60} INFO - Started process 86 to run task
+[2025-12-21T16:20:50.699+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'warehouse_delivery_refresh', 'refresh_warehouse_delivery', 'scheduled__2025-12-20T03:00:00+00:00', '--job-id', '3', '--raw', '--subdir', 'DAGS_FOLDER/warehouse_delivery_dag.py', '--cfg-path', '/tmp/tmp3s2846nq']
+[2025-12-21T16:20:50.701+0000] {standard_task_runner.py:88} INFO - Job 3: Subtask refresh_warehouse_delivery
+[2025-12-21T16:20:50.745+0000] {task_command.py:423} INFO - Running <TaskInstance: warehouse_delivery_refresh.refresh_warehouse_delivery scheduled__2025-12-20T03:00:00+00:00 [running]> on host 5b34f2d3bfaf
+[2025-12-21T16:20:50.910+0000] {taskinstance.py:2481} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='warehouse_delivery_refresh' AIRFLOW_CTX_TASK_ID='refresh_warehouse_delivery' AIRFLOW_CTX_EXECUTION_DATE='2025-12-20T03:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-12-20T03:00:00+00:00'
+[2025-12-21T16:20:50.925+0000] {logging_mixin.py:188} INFO - Обновление витрины 'Доставка по складам'
+[2025-12-21T16:20:51.417+0000] {logging_mixin.py:188} INFO - Витрина 'Доставка по складам' успешно обновлена
+[2025-12-21T16:20:51.417+0000] {python.py:201} INFO - Done. Returned value was: None
+[2025-12-21T16:20:51.429+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=warehouse_delivery_refresh, task_id=refresh_warehouse_delivery, execution_date=20251220T030000, start_date=20251221T162050, end_date=20251221T162051
+[2025-12-21T16:20:51.454+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-12-21T16:20:51.485+0000] {taskinstance.py:3281} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-12-21T18:17:36.233+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: warehouse_delivery_refresh.refresh_warehouse_delivery scheduled__2025-12-20T03:00:00+00:00 [queued]>
+[2025-12-21T18:17:36.239+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: warehouse_delivery_refresh.refresh_warehouse_delivery scheduled__2025-12-20T03:00:00+00:00 [queued]>
+[2025-12-21T18:17:36.239+0000] {taskinstance.py:2171} INFO - Starting attempt 1 of 2
+[2025-12-21T18:17:36.246+0000] {taskinstance.py:2192} INFO - Executing <Task(PythonOperator): refresh_warehouse_delivery> on 2025-12-20 03:00:00+00:00
+[2025-12-21T18:17:36.250+0000] {standard_task_runner.py:60} INFO - Started process 195 to run task
+[2025-12-21T18:17:36.256+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'warehouse_delivery_refresh', 'refresh_warehouse_delivery', 'scheduled__2025-12-20T03:00:00+00:00', '--job-id', '3', '--raw', '--subdir', 'DAGS_FOLDER/warehouse_delivery_dag.py', '--cfg-path', '/tmp/tmpk45yznnw']
+[2025-12-21T18:17:36.258+0000] {standard_task_runner.py:88} INFO - Job 3: Subtask refresh_warehouse_delivery
+[2025-12-21T18:17:36.320+0000] {task_command.py:423} INFO - Running <TaskInstance: warehouse_delivery_refresh.refresh_warehouse_delivery scheduled__2025-12-20T03:00:00+00:00 [running]> on host 7bcda786adaa
+[2025-12-21T18:17:36.484+0000] {taskinstance.py:2481} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='warehouse_delivery_refresh' AIRFLOW_CTX_TASK_ID='refresh_warehouse_delivery' AIRFLOW_CTX_EXECUTION_DATE='2025-12-20T03:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-12-20T03:00:00+00:00'
+[2025-12-21T18:17:36.493+0000] {logging_mixin.py:188} INFO - Обновление витрины 'Доставка по складам'
+[2025-12-21T18:17:36.507+0000] {logging_mixin.py:188} INFO - Витрина 'Доставка по складам' успешно обновлена
+[2025-12-21T18:17:36.507+0000] {python.py:201} INFO - Done. Returned value was: None
+[2025-12-21T18:17:36.519+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=warehouse_delivery_refresh, task_id=refresh_warehouse_delivery, execution_date=20251220T030000, start_date=20251221T181736, end_date=20251221T181736
+[2025-12-21T18:17:36.566+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-12-21T18:17:36.584+0000] {taskinstance.py:3281} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-12-21T18:29:36.593+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: warehouse_delivery_refresh.refresh_warehouse_delivery scheduled__2025-12-20T03:00:00+00:00 [queued]>
+[2025-12-21T18:29:36.597+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: warehouse_delivery_refresh.refresh_warehouse_delivery scheduled__2025-12-20T03:00:00+00:00 [queued]>
+[2025-12-21T18:29:36.598+0000] {taskinstance.py:2171} INFO - Starting attempt 1 of 2
+[2025-12-21T18:29:36.605+0000] {taskinstance.py:2192} INFO - Executing <Task(PythonOperator): refresh_warehouse_delivery> on 2025-12-20 03:00:00+00:00
+[2025-12-21T18:29:36.608+0000] {standard_task_runner.py:60} INFO - Started process 86 to run task
+[2025-12-21T18:29:36.610+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'warehouse_delivery_refresh', 'refresh_warehouse_delivery', 'scheduled__2025-12-20T03:00:00+00:00', '--job-id', '3', '--raw', '--subdir', 'DAGS_FOLDER/warehouse_delivery_dag.py', '--cfg-path', '/tmp/tmpfizynu73']
+[2025-12-21T18:29:36.613+0000] {standard_task_runner.py:88} INFO - Job 3: Subtask refresh_warehouse_delivery
+[2025-12-21T18:29:36.678+0000] {task_command.py:423} INFO - Running <TaskInstance: warehouse_delivery_refresh.refresh_warehouse_delivery scheduled__2025-12-20T03:00:00+00:00 [running]> on host 2ed07f17b60e
+[2025-12-21T18:29:36.907+0000] {taskinstance.py:2481} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='warehouse_delivery_refresh' AIRFLOW_CTX_TASK_ID='refresh_warehouse_delivery' AIRFLOW_CTX_EXECUTION_DATE='2025-12-20T03:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-12-20T03:00:00+00:00'
+[2025-12-21T18:29:36.918+0000] {logging_mixin.py:188} INFO - Обновление витрины 'Доставка по складам'
+[2025-12-21T18:29:37.003+0000] {logging_mixin.py:188} INFO - Витрина 'Доставка по складам' успешно обновлена
+[2025-12-21T18:29:37.003+0000] {python.py:201} INFO - Done. Returned value was: None
+[2025-12-21T18:29:37.015+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=warehouse_delivery_refresh, task_id=refresh_warehouse_delivery, execution_date=20251220T030000, start_date=20251221T182936, end_date=20251221T182937
+[2025-12-21T18:29:37.041+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-12-21T18:29:37.059+0000] {taskinstance.py:3281} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-12-21T20:17:15.102+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: warehouse_delivery_refresh.refresh_warehouse_delivery scheduled__2025-12-20T03:00:00+00:00 [queued]>
+[2025-12-21T20:17:15.108+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: warehouse_delivery_refresh.refresh_warehouse_delivery scheduled__2025-12-20T03:00:00+00:00 [queued]>
+[2025-12-21T20:17:15.108+0000] {taskinstance.py:2171} INFO - Starting attempt 1 of 2
+[2025-12-21T20:17:15.116+0000] {taskinstance.py:2192} INFO - Executing <Task(PythonOperator): refresh_warehouse_delivery> on 2025-12-20 03:00:00+00:00
+[2025-12-21T20:17:15.120+0000] {standard_task_runner.py:60} INFO - Started process 76 to run task
+[2025-12-21T20:17:15.123+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'warehouse_delivery_refresh', 'refresh_warehouse_delivery', 'scheduled__2025-12-20T03:00:00+00:00', '--job-id', '3', '--raw', '--subdir', 'DAGS_FOLDER/warehouse_delivery_dag.py', '--cfg-path', '/tmp/tmpzh9w7f1c']
+[2025-12-21T20:17:15.127+0000] {standard_task_runner.py:88} INFO - Job 3: Subtask refresh_warehouse_delivery
+[2025-12-21T20:17:15.179+0000] {task_command.py:423} INFO - Running <TaskInstance: warehouse_delivery_refresh.refresh_warehouse_delivery scheduled__2025-12-20T03:00:00+00:00 [running]> on host 58e9a51c9fed
+[2025-12-21T20:17:15.429+0000] {taskinstance.py:2481} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='warehouse_delivery_refresh' AIRFLOW_CTX_TASK_ID='refresh_warehouse_delivery' AIRFLOW_CTX_EXECUTION_DATE='2025-12-20T03:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-12-20T03:00:00+00:00'
+[2025-12-21T20:17:15.443+0000] {logging_mixin.py:188} INFO - Обновление витрины 'Доставка по складам'
+[2025-12-21T20:17:15.981+0000] {logging_mixin.py:188} INFO - Витрина 'Доставка по складам' успешно обновлена
+[2025-12-21T20:17:15.982+0000] {python.py:201} INFO - Done. Returned value was: None
+[2025-12-21T20:17:16.022+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=warehouse_delivery_refresh, task_id=refresh_warehouse_delivery, execution_date=20251220T030000, start_date=20251221T201715, end_date=20251221T201716
+[2025-12-21T20:17:16.058+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-12-21T20:17:16.111+0000] {taskinstance.py:3281} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-12-21T20:39:00.034+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: warehouse_delivery_refresh.refresh_warehouse_delivery scheduled__2025-12-20T03:00:00+00:00 [queued]>
+[2025-12-21T20:39:00.042+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: warehouse_delivery_refresh.refresh_warehouse_delivery scheduled__2025-12-20T03:00:00+00:00 [queued]>
+[2025-12-21T20:39:00.042+0000] {taskinstance.py:2171} INFO - Starting attempt 1 of 2
+[2025-12-21T20:39:00.051+0000] {taskinstance.py:2192} INFO - Executing <Task(PythonOperator): refresh_warehouse_delivery> on 2025-12-20 03:00:00+00:00
+[2025-12-21T20:39:00.058+0000] {standard_task_runner.py:60} INFO - Started process 106 to run task
+[2025-12-21T20:39:00.060+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'warehouse_delivery_refresh', 'refresh_warehouse_delivery', 'scheduled__2025-12-20T03:00:00+00:00', '--job-id', '3', '--raw', '--subdir', 'DAGS_FOLDER/warehouse_delivery_dag.py', '--cfg-path', '/tmp/tmpfm_6rz1d']
+[2025-12-21T20:39:00.063+0000] {standard_task_runner.py:88} INFO - Job 3: Subtask refresh_warehouse_delivery
+[2025-12-21T20:39:00.114+0000] {task_command.py:423} INFO - Running <TaskInstance: warehouse_delivery_refresh.refresh_warehouse_delivery scheduled__2025-12-20T03:00:00+00:00 [running]> on host bec68252d489
+[2025-12-21T20:39:00.299+0000] {taskinstance.py:2481} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='warehouse_delivery_refresh' AIRFLOW_CTX_TASK_ID='refresh_warehouse_delivery' AIRFLOW_CTX_EXECUTION_DATE='2025-12-20T03:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-12-20T03:00:00+00:00'
+[2025-12-21T20:39:00.310+0000] {logging_mixin.py:188} INFO - Обновление витрины 'Доставка по складам'
+[2025-12-21T20:39:00.795+0000] {logging_mixin.py:188} INFO - Витрина 'Доставка по складам' успешно обновлена
+[2025-12-21T20:39:00.795+0000] {python.py:201} INFO - Done. Returned value was: None
+[2025-12-21T20:39:00.811+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=warehouse_delivery_refresh, task_id=refresh_warehouse_delivery, execution_date=20251220T030000, start_date=20251221T203900, end_date=20251221T203900
+[2025-12-21T20:39:00.836+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-12-21T20:39:00.853+0000] {taskinstance.py:3281} INFO - 0 downstream tasks scheduled from follow-on schedule check

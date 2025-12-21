@@ -1,0 +1,34 @@
+[2025-12-20T16:46:44.415+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: warehouse_delivery_refresh.refresh_warehouse_delivery manual__2025-12-20T16:46:42.380156+00:00 [queued]>
+[2025-12-20T16:46:44.420+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: warehouse_delivery_refresh.refresh_warehouse_delivery manual__2025-12-20T16:46:42.380156+00:00 [queued]>
+[2025-12-20T16:46:44.420+0000] {taskinstance.py:2171} INFO - Starting attempt 1 of 2
+[2025-12-20T16:46:44.428+0000] {taskinstance.py:2192} INFO - Executing <Task(PythonOperator): refresh_warehouse_delivery> on 2025-12-20 16:46:42.380156+00:00
+[2025-12-20T16:46:44.430+0000] {standard_task_runner.py:60} INFO - Started process 1183 to run task
+[2025-12-20T16:46:44.434+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'warehouse_delivery_refresh', 'refresh_warehouse_delivery', 'manual__2025-12-20T16:46:42.380156+00:00', '--job-id', '17', '--raw', '--subdir', 'DAGS_FOLDER/warehouse_delivery_dag.py', '--cfg-path', '/tmp/tmp8oskfp3t']
+[2025-12-20T16:46:44.436+0000] {standard_task_runner.py:88} INFO - Job 17: Subtask refresh_warehouse_delivery
+[2025-12-20T16:46:44.488+0000] {task_command.py:423} INFO - Running <TaskInstance: warehouse_delivery_refresh.refresh_warehouse_delivery manual__2025-12-20T16:46:42.380156+00:00 [running]> on host 854d89afec24
+[2025-12-20T16:46:44.661+0000] {taskinstance.py:2481} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='warehouse_delivery_refresh' AIRFLOW_CTX_TASK_ID='refresh_warehouse_delivery' AIRFLOW_CTX_EXECUTION_DATE='2025-12-20T16:46:42.380156+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-12-20T16:46:42.380156+00:00'
+[2025-12-20T16:46:44.670+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.8/site-packages/***/utils/context.py:315 AirflowContextDeprecationWarning: Accessing 'execution_date' from the template is deprecated and will be removed in a future version. Please use 'data_interval_start' or 'logical_date' instead.
+[2025-12-20T16:46:44.671+0000] {logging_mixin.py:188} INFO - Обновление витрины 'Доставка по складам' за дату: 2025-12-20
+[2025-12-20T16:46:44.675+0000] {taskinstance.py:2699} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/warehouse_delivery_dag.py", line 116, in refresh_warehouse_delivery
+    raise e
+  File "/opt/airflow/dags/warehouse_delivery_dag.py", line 110, in refresh_warehouse_delivery
+    cur.execute(sql)
+psycopg2.errors.UndefinedColumn: column soid.is_current does not exist
+LINE 62:         AND soid.is_current = TRUE
+                     ^
+
+[2025-12-20T16:46:44.684+0000] {taskinstance.py:1138} INFO - Marking task as UP_FOR_RETRY. dag_id=warehouse_delivery_refresh, task_id=refresh_warehouse_delivery, execution_date=20251220T164642, start_date=20251220T164644, end_date=20251220T164644
+[2025-12-20T16:46:44.692+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 17 for task refresh_warehouse_delivery (column soid.is_current does not exist
+LINE 62:         AND soid.is_current = TRUE
+                     ^
+; 1183)
+[2025-12-20T16:46:44.702+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-12-20T16:46:44.718+0000] {taskinstance.py:3281} INFO - 0 downstream tasks scheduled from follow-on schedule check
