@@ -1,6 +1,6 @@
 # Домашнее задание №1+2: Детальный слой DWH
 
-чтобы проект запустился нужно еще добавить в проект папку HSE_FTiAD_DWH/init-script/sql/mock_data с содержимым из https://disk.360.yandex.ru/d/5KJFK2Ly0S0Drg  (тут лежат csv файлы)
+чтобы проект запустился нужно еще добавить в проект папку HSE_FTiAD_DWH/init-script/sql/mock_data с содержимым из https://disk.360.yandex.ru/d/5KJFK2Ly0S0Drg  (тут лежат csv файлы которые подгружаются в мастер ветку)
 
 ## Описание
 
